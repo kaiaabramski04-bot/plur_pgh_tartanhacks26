@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PLUR PGH</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body { background: #000; color: #8ACE00; font-family: 'Courier New', monospace; padding: 20px }
+        .container { max-width: 900px; margin: 20px auto; background:#111; border:2px solid #8ACE00; padding:20px }
+        .result { border:1px solid #333; padding:10px; margin:10px 0; background:#000 }
+        a { color:#8ACE00 }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>{{ username }}'s Saved Results</h2>
+        <p><a href="{{ url_for('quiz') }}">Take quiz</a> · <a href="{{ url_for('logout') }}">Logout</a></p>
+        {% if results %}
+            {% for r in results %}
+                <div class="result">
+                    <div><strong>Saved:</strong> {{ r.timestamp }}</div>
+                    <div><strong>Zip:</strong> {{ r.user_zip }}</div>
+                    <div style="margin-top:8px">
+                        {% for v in r.venues %}
+                            <div style="border-top:1px solid #333; padding:8px 0">
+                                <strong>#{{ loop.index }}: {{ v.get('title','Unknown') }}</strong><br>
+                                {{ v.get('type','') }} — {{ v.get('price','') }} — {{ v.get('Zip Code','') }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No saved results yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
